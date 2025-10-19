@@ -48,7 +48,7 @@ if prompt:=st.chat_input(placeholder="What is machine learning?"):
 
     model = ChatGroq(model = "llama-3.3-70b-versatile",api_key=groq_api_key,streaming=True)
     tools = [search,arxiv,wiki]
-    search_agent = initialize_agent(tools,model,agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION,handling_parsing_errors = False)
+    search_agent = initialize_agent(tools,model,agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION,handling_parsing_errors = True)
 
     with st.chat_message("assistant"):
         st_cb = StreamlitCallbackHandler(st.container(),expand_new_thoughts=False)
@@ -56,4 +56,5 @@ if prompt:=st.chat_input(placeholder="What is machine learning?"):
         response = search_agent.run(st.session_state.messages, callbacks=[st_cb])
         st.session_state.messages.append({"role":"assistant","content":response})
         st.write(response)
+
 
