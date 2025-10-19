@@ -43,7 +43,7 @@ for msg in st.session_state.messages:
 if prompt:=st.chat_input(placeholder="What is machine learning?"):
     st.session_state.messages.append({"role":"user","content":prompt})
     st.chat_message("user").write(prompt)
-    if groq_api_key==None:
+    if not groq_api_key:
         groq_api_key = st.secrets["Groq_Api_Key_Search_Engine"]
 
     model = ChatGroq(model = "llama-3.3-70b-versatile",api_key=groq_api_key,streaming=True)
@@ -56,3 +56,4 @@ if prompt:=st.chat_input(placeholder="What is machine learning?"):
         response = search_agent.run(st.session_state.messages, callbacks=[st_cb])
         st.session_state.messages.append({"role":"assistant","content":response})
         st.write(response)
+
